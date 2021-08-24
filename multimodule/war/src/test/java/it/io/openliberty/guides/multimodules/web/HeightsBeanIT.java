@@ -1,4 +1,3 @@
-// tag::copyright[]
 /*******************************************************************************
  * Copyright (c) 2017, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
@@ -9,11 +8,11 @@
  * Contributors:
  *     IBM Corporation - Initial implementation
  *******************************************************************************/
-// end::copyright[]
-package it.io.openliberty.guides.multimodules;
+package it.io.openliberty.guides.multimodules.web;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,13 +21,11 @@ import java.net.URL;
 
 import org.junit.jupiter.api.Test;
 
-public class IT {
-    String port = System.getProperty("default.http.port");
+public class HeightsBeanIT {
     String war = "converter";
-    String urlBase = "http://localhost:" + port + "/" + war + "/";
+    String urlBase = "http://localhost:" + "9080" + "/" + war + "/";
 
     @Test
-    // tag::testIndexPage[]
     public void testIndexPage() throws Exception {
         String url = this.urlBase;
         HttpURLConnection con = testRequestHelper(url, "GET");
@@ -36,17 +33,14 @@ public class IT {
         assertTrue(testBufferHelper(con).contains("Enter the height in centimeters"),
                         "Incorrect response from " + url);
     }
-    // end::testIndexPage[]
 
     @Test
-    // tag::testHeightsPage[]
     public void testHeightsPage() throws Exception {
         String url = this.urlBase + "heights.jsp?heightCm=10";
         HttpURLConnection con = testRequestHelper(url, "POST");
         assertTrue(testBufferHelper(con).contains("3        inches"),
                         "Incorrect response from " + url);
     }
-    // end::testHeightsPage[]
 
     private HttpURLConnection testRequestHelper(String url, String method)
                     throws Exception {
@@ -70,3 +64,4 @@ public class IT {
     }
 
 }
+
