@@ -4,14 +4,15 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- tag::packaging[] -->
-    <groupId>io.openliberty.guides</groupId>
+    <parent>
+        <groupId>io.openliberty.guides</groupId>
+        <artifactId>guide-maven-multimodules</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>guide-maven-multimodules-ear</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <!-- tag::packagingType[] -->
     <packaging>ear</packaging>
-    <!-- end::packagingType[] -->
-    <!-- end::packaging[] -->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,26 +26,18 @@
 
     <dependencies>
         <!-- web and jar modules as dependencies -->
-        <!-- tag::dependencies[] -->
-        <!-- tag::dependency-jar[] -->
         <dependency>
             <groupId>io.openliberty.guides</groupId>
             <artifactId>guide-maven-multimodules-jar</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
-        <!-- end::dependency-jar[] -->
-        <!-- tag::dependency-war[] -->
         <dependency>
             <groupId>io.openliberty.guides</groupId>
             <artifactId>guide-maven-multimodules-war</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <!-- tag::warType[] -->
             <type>war</type>
-            <!-- end::warType[] -->
         </dependency>
-        <!-- end::dependency-war[] -->
-        <!-- end::dependencies[] -->
 
         <!-- For tests -->
         <dependency>
@@ -65,41 +58,24 @@
                 <version>3.2.0</version>
                 <configuration>
                     <modules>
-                        <!-- tag::jarModule[] -->
                         <jarModule>
                             <groupId>io.openliberty.guides</groupId>
                             <artifactId>guide-maven-multimodules-jar</artifactId>
                             <uri>/guide-maven-multimodules-jar-1.0-SNAPSHOT.jar</uri>
                         </jarModule>
-                        <!-- end::jarModule[] -->
-                        <!-- tag::webModule[] -->
                         <webModule>
                             <groupId>io.openliberty.guides</groupId>
                             <artifactId>guide-maven-multimodules-war</artifactId>
                             <uri>/guide-maven-multimodules-war-1.0-SNAPSHOT.war</uri>
                             <!-- Set custom context root -->
-                            <!-- tag::contextRoot[] -->
                             <contextRoot>/converter</contextRoot>
-                            <!-- end::contextRoot[] -->
                         </webModule>
-                        <!-- end::webModule[] -->
                     </modules>
                 </configuration>
             </plugin>
-            <!-- end::maven-ear-plugin[] -->
-
-            <!-- Enable liberty-maven plugin -->
-            <!-- tag::liberty-maven-plugin[] -->
-            <plugin>
-                <groupId>io.openliberty.tools</groupId>
-                <artifactId>liberty-maven-plugin</artifactId>
-                <version>3.3.4</version>
-            </plugin>
-            <!-- end::liberty-maven-plugin[] -->
 
             <!-- Since the package type is ear,
             need to run testCompile to compile the tests -->
-            <!-- tag::maven-compiler-plugin[] -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -107,15 +83,12 @@
                 <executions>
                     <execution>
                         <phase>test-compile</phase>
-                        <!-- tag::testCompile[] -->
                         <goals>
                             <goal>testCompile</goal>
                         </goals>
-                        <!-- end::testCompile[] -->
                     </execution>
                 </executions>
             </plugin>
-            <!-- end::maven-compiler-plugin[] -->
 
             <!-- Plugin to run integration tests -->
             <plugin>
